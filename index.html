@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.css">
+        <link rel="stylesheet" href="./plugin/bootstrap-5.0.0-beta1-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="./plugin/fullcalendar-5.5.1/lib/main.css">
+        
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="./js/jquery.mobile-1.4.5.js"></script>
+        
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="./js/acolhimento.js"></script>
+    </head>
+<html>
+    <body>
+        <div data-role="page" id="index" class="container-fluid">
+            <div data-role="header">
+                <h1>Acolhimento</h1>
+            </div>
+
+            <div data-role="panel" id="menu"> 
+                <h2>Opções</h2>
+                <div data-role="main" class="ui-content">
+                    <div data-role="collapsibleset" data-inset="false" >
+                        <div data-role="collapsible" data-inset="false" >
+                            <h3>Configurações</h3>
+                            <a href="#relGeneroBiologico" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Gêneros</a>
+                            <a href="#relSexualidade" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Sexualidades</a>
+                            <a href="#relReligiosidade" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Religiosidades</a>
+                            <a href="#relEtnia" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Etnias</a>
+                            <a href="#relEscolaridade" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Escolaridades</a>
+                            <a href="#relEstadoCivil" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Tipos de Estados Civis</a>
+                        </div>
+                        <div data-role="collapsible" data-inset="false" >
+                            <h3>Acolhidos</h3>
+                            <a href="#relAcolhido" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Cadastro do Acolhido</a>
+                            <a href="#relAnamnese" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Anamneses</a>
+                            <a href="#relEvolucao" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Evoluções</a>
+                        </div>
+                        <div data-role="collapsible" data-inset="false" >
+                            <h3>Agendamentos</h3>
+                            <a href="#relAgendamento" class="ui-btn ui-corner-all ui-shadow btn-sm" data-transition="slide">Cadastro</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            
+            <div data-role="main" class="ui-content container">
+                <div>
+                    <a href="#menu" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Menu</a>
+                </div>
+                <div id='calendar' class="container">
+                </div>
+            </div>
+
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div> 
+        </div>
+        <!--
+            Inicio das telas respectivas as informacoes sobre genero biologio
+        -->
+        <div data-role="page" id="relGeneroBiologico" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Gêneros</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaGenero">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formGeneroBiologico" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formGeneroBiologico" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Gêneros</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_genero" name="id_genero" value="" hidden>
+                    </div>
+                    <label for="generoDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="generoDescricao" name="generoDescricao" value="" placeholder="Escreva a descrição do Gênero." aria-label="Escreva a descrição do Gênero" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relGeneroBiologico" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+            Fim das telas respectivas as informacoes sobre Genero Biologio
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Sexualidade
+        -->
+        <div data-role="page" id="relSexualidade" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Sexualidade</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaSexualidade">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formSexualidade" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formSexualidade" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Sexualiade</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_sexualidade" name="id_sexualidade" value="" hidden>
+                    </div>
+                    <label for="sexualidadeDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="sexualidadeDescricao" name="sexualidadeDescricao" value="" placeholder="Escreva a descrição da Sexualidade." aria-label="Escreva a descrição do Sexualidade" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relSexualidade" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+            Fim das telas respectivas as informacoes sobre Sexualidade
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Religiosidade
+        -->
+        <div data-role="page" id="relReligiosidade" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Religiosidades</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaReligiosidade">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formReligiosidade" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formReligiosidade" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Religiosidades</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_religiosidade" name="id_religiosidade" value="" hidden>
+                    </div>
+                    <label for="religiosidadeDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="religiosidadeDescricao" name="religiosidadeDescricao" value="" placeholder="Escreva a descrição da Religiosidade." aria-label="Escreva a descrição do Religiosiade" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relReligiosidade" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+            Fim das telas respectivas as informacoes sobre Religiosidade
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Etnias
+        -->
+        <div data-role="page" id="relEtnia" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Etnias</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaEtnia">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formEtnia" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formEtnia" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Etnias</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_etnia" name="id_etnia" value="" hidden>
+                    </div>
+                    <label for="etniaDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="etniaDescricao" name="etniaDescricao" value="" placeholder="Escreva a descrição da Etnia." aria-label="Escreva a descrição do Etnia" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relEtnia" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+            Fim das telas respectivas as informacoes sobre Etnias
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Escolaridade
+        -->
+        <div data-role="page" id="relEscolaridade" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Escolaridade</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaEscolaridade">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formEscolaridade" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formEscolaridade" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Escolaridade</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_escolaridade" name="id_escolaridade" value="" hidden>
+                    </div>
+                    <label for="escolaridadeDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="escolaridadeDescricao" name="escolaridadeDescricao" value="" placeholder="Escreva a descrição da Escolaridade." aria-label="Escreva a descrição da Escolaridade" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relEscolaridade" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+            Fim das telas respectivas as informacoes sobre Escolaridade
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Estado Civil
+        -->
+        <div data-role="page" id="relEstadoCivil" class="container">
+            <div data-role="header">
+                <h1>Relatório de Tipos de Estado Civil</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaEstadoCivil">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formEstadoCivil" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Tipo</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formEstadoCivil" class="container">
+            <div data-role="header">
+                <h1>Formulário de Tipos de Estado Civil</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_estadoCivil" name="id_estadoCivil" value="" hidden>
+                    </div>
+                    <label for="estadoCivilDescricao">Descrição:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="estadoCivilDescricao" name="estadoCivilDescricao" value="" placeholder="Escreva a descrição do Estado Civil." aria-label="Escreva a descrição do Estado Civil" required>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                        
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relEstadoCivil" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+        Fim das telas respectivas as informacoes sobre Estado Civil
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Acolhido
+        -->
+        <div data-role="page" id="relAcolhido" class="container">
+            <div data-role="header">
+                <h1>Relatório de Acolhidos</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaAcolhido">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formAcolhido" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Acolhido</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formAcolhido" class="container">
+            <div data-role="header">
+                <h1>Formulário do Acolhido</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_acolhido" name="id_acolhido" value="" hidden>
+                    </div>
+                    <label for="nome">Nome:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="nome" name="nome" value="" placeholder="Escreva o nome." aria-label="Escreva o nome" required>
+                    </div>
+                    <label for="telefone">Telefone:</label>
+                    <div class="form-floating">
+                        <input type="tel" class="form-control" id="telefone" name="telefone" value="" placeholder="Escreva o telefone." aria-label="Escreva o telefone" required>
+                    </div>
+                    <label for="celular">Celular:</label>
+                    <div class="form-floating">
+                        <input type="tel" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" class="form-control" id="celular" name="celular" value="" placeholder="Escreva o celular. Ex.:(61)99999-8888" aria-label="Escreva o celular" required>
+                    </div>
+                    <label for="email">E-mail:</label>
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" value="" placeholder="Escreva o email." aria-label="Escreva o email" required>
+                    </div>
+                    <label for="genero">Selecione o Gênero:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="genero" id="genero" aria-label="Selecione o Gênero." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="genero">Selecione a Sexualidade:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="sexualidade" id="sexualidade" aria-label="Selecione a Sexualidade." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="genero">Selecione a Religiosidade:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="religiosidade" id="religiosidade" aria-label="Selecione a Religiosidade." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="genero">Selecione a Etnia:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="etnia" id="etnia" aria-label="Selecione a Etnia." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="genero">Selecione a Escolaridade:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="escolaridade" id="escolaridade" aria-label="Selecione a Escolaridade." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="genero">Selecione Estado Civil:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="estadoCivil" id="estadoCivil" aria-label="Selecione o Estado Civil." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="descricaoDisponivel" id="descricaoDisponivel" aria-label="Essa descrição estará disponível?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                    </div>
+
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relAcolhido" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+        Fim das telas respectivas as informacoes sobre Acolhido
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Anamneses
+        -->
+        <div data-role="page" id="relAnamnese" class="container">
+            <div data-role="header">
+                <h1>Relatório de Anamneses</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaAnamnese">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formAnamnese" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Nova Anamnese</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formAnamnese" class="container">
+            <div data-role="header">
+                <h1>Formulário de Anamnese</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_acolhido" name="id_acolhido" value="" hidden>
+                    </div>
+                    <label for="acolhido">Selecione o Acolhido:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="acolhido" id="acolhido" aria-label="Selecione o Acolhido." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="dataAnamnese">Data da Anamnese:</label>
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="dataAnamnese" name="dataAnamnese" value="" placeholder="Selecione a Data." aria-label="Selecione a Data." required>
+                    </div>
+                    <label for="queixaPrincipal">Queixa Principal:</label>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="queixaPrincipal" name="queixaPrincipal" value="" placeholder="Escreva a Queixa Principal." aria-label="Escreva a Queixa Principal." required>
+                    </div>
+                    <label for="habito">Hábitos:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="habito" name="habito" value="" placeholder="Escreva os Hábitos." aria-label="Escreva os Hábitos." required></textarea>
+                    </div>
+                    <label for="historiaAtual">História Atual:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="historiaAtual" name="historiaAtual" value="" placeholder="Escreva a História Atual do Acolhido." aria-label="Escreva a História Atual do Acolhido;" required></textarea>
+                    </div>
+                    <label for="historiaAnterior">História Anterior:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="historiaAnterior" name="historiaAnterior" value="" placeholder="Escreva a História Anterior do Acolhido." aria-label="Escreva a História Anterior do Acolhido." required></textarea>
+                    </div>
+                    <label for="historiaFamiliar">História Familiar:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="historiaFamiliar" name="historiaFamiliar" value="" placeholder="Escreva a História Familiar." aria-label="Escreva a História Familiar." required></textarea>
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relAnamnese" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+        Fim das telas respectivas as informacoes sobre Anamneses
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Evoluções
+        -->
+        <div data-role="page" id="relEvolucao" class="container">
+            <div data-role="header">
+                <h1>Relatório de Evoluções</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaEvolucao">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formEvolucao" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Nova Evolução</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formEvolucao" class="container">
+            <div data-role="header">
+                <h1>Formulário de Evolução</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_acolhido" name="id_acolhido" value="" hidden>
+                    </div>
+                    <label for="acolhido">Selecione o Acolhido:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="acolhido" id="acolhido" aria-label="Selecione o Acolhido." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="dataEvolucao">Data da Evolucao:</label>
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="dataEvolucao" name="dataEvolucao" value="" placeholder="Selecione a Data." aria-label="Selecione a Data." required>
+                    </div>
+                    <label for="evolucao">Evolução:</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="evolucao" name="evolucao" value="" placeholder="Escreva a Evolução." aria-label="Escreva a Evolução." required></textarea>
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relAnamnese" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+        Fim das telas respectivas as informacoes sobre Evoluções
+        -->
+
+        <!--
+            Inicio das telas respectivas as informacoes sobre Agendamentos
+        -->
+        <div data-role="page" id="relAgendamento" class="container">
+            <div data-role="header">
+                <h1>Relatório de Agendamentos</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="ui-filterable">
+                    <div class="ui-content">
+                        <input id="filtro" data-type="search">
+                        <ul data-role="listview" data-filter="true" data-input="#filtro" id="listaAgendamento">
+                            
+                        </ul>
+                    </div>
+                    <div class="ui-content">
+                        <a href="#index" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Página Principal</a>
+                        <a href="#formAgendamento" data-transition="slide"class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Novo Agendamento</a>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        
+        <div data-role="page" id="formAgendamento" class="container">
+            <div data-role="header">
+                <h1>Formulário de Agendamento</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form class="form-horizontal needs-validation" action="javascript:gravar();" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id_acolhido" name="id_acolhido" value="" hidden>
+                    </div>
+                    <label for="acolhido">Selecione o Acolhido:</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="acolhido" id="acolhido" aria-label="Selecione o Acolhido." required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <label for="dataAgendamento">Data do Agendamento:</label>
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="dataAgendamento" name="dataAgendamento" value="" placeholder="Selecione a Data." aria-label="Selecione a Data." required>
+                    </div>
+                    <label for="horaAgendamento">Hora Agendada:</label>
+                    <div class="form-floating">
+                        <input type="time" class="form-control" id="horaAgendamento" name="horaAgendamento" value="" placeholder="Digite a hora escolhida." aria-label="Digite a hora escolhida." required></input>
+                    </div>
+                    <label for="descricaoDisponivel">Excluído?</label>
+                    <div class="form-floating">
+                        <select class="form-select " name="agendamentoExcluido" id="agendamentoExcluido" aria-label="Excluir Agendamento?" required>
+                            <option value=""></option>
+                            <option value="1">SIM</option>
+                            <option value="0">NÃO</option>
+                        </select>
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, preencha os campos.
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Salvar</button>
+                            <a href="#relAnamnese" data-transition="slide" data-direction="reverse" class="ui-btn ui-corner-all ui-btn-inline ui-shadow btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer">
+                <h1>Acolhimento - Uma ferramenta para Profissionais de Saúde.</h1>
+            </div>
+        </div>
+        <!--
+        Fim das telas respectivas as informacoes sobre Agendamentos
+        -->
+    </body>
+    <script src="./plugin/bootstrap-5.0.0-beta1-dist/js/bootstrap.js"></script>
+    <script src="./plugin/fullcalendar-5.5.1/lib/main.js"></script>
+    <script src="./plugin/fullcalendar-5.5.1/lib/locales-all.js"></script>
+    <!--<script src="./js/model.js"></script>-->
+</html>
